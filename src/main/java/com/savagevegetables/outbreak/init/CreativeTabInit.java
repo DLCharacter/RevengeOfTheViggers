@@ -28,5 +28,15 @@ public class CreativeTabInit {
                 output.accept(BlockInit.JERUSALEM_ARTICHOKE_CROP.get());
                 output.accept(BlockInit.RUTABAGA_CROP.get());
                 output.accept(BlockInit.CELERY_CROP.get());
+
+                output.accept(ItemInit.PUMPKIN_SPAWN_EGG.get());
+                output.accept(ItemInit.TOMATO_SPAWN_EGG.get());
+                output.accept(ItemInit.CORN_SPAWN_EGG.get());
+                output.accept(ItemInit.JERUSALEM_ARTICHOKE_SPAWN_EGG.get());
+                output.accept(ItemInit.RUTABAGA_SPAWN_EGG.get());
+                output.accept(ItemInit.CELERY_SPAWN_EGG.get());
+                output.accept(ItemInit.HYBRID_SPAWN_EGG.get());
+                output.accept(ItemInit.EGGPLANT_SPAWN_EGG.get());
+                output.accept(ItemInit.ZUCCHINI_SPAWN_EGG.get());
             }).build());
 }
