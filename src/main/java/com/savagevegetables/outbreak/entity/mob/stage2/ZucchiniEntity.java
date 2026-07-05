@@ -15,6 +15,11 @@ import net.minecraft.world.entity.Mob;
 import java.util.EnumSet;
 
 public class ZucchiniEntity extends Phantom {
+    @Override
+    public boolean ignoreExplosion() {
+        return true;
+    }
+
 
     public ZucchiniEntity(EntityType<? extends Phantom> type, Level level) {
         super(type, level);
@@ -76,8 +81,9 @@ public class ZucchiniEntity extends Phantom {
                         if (cow != null) {
                             cow.setPos(this.zucchini.getX(), this.zucchini.getY() - 1.0D, this.zucchini.getZ());
                             // Drops fast
-                            cow.setDeltaMovement(0, -1.0, 0);
-                            cow.addTag("exploding_cow");
+                            cow.setDeltaMovement(0, -1.5, 0);
+                            cow.setNoAi(true);
+                            cow.addTag("exploding_cow_zucchini");
                             level.addFreshEntity(cow);
                         }
                     }
