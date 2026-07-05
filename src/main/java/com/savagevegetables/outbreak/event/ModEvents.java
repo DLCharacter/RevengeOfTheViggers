@@ -22,4 +22,18 @@ public class ModEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onCowTick(net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent event) {
+        if (event.getEntity() instanceof Cow cow && cow.getTags().contains("exploding_cow")) {
+            Level level = cow.level();
+            if (!level.isClientSide) {
+                // If it flies horizontally (NoGravity tag applied), explode if it hits a wall
+                if (cow.horizontalCollision || cow.verticalCollision) {
+                    level.explode(cow, cow.getX(), cow.getY(), cow.getZ(), 3.0F, Level.ExplosionInteraction.MOB);
+                    cow.discard();
+                }
+            }
+        }
+    }
 }
