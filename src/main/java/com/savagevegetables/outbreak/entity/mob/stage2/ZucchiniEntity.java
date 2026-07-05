@@ -24,23 +24,23 @@ public class ZucchiniEntity extends Phantom {
     protected void registerGoals() {
         super.registerGoals();
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.goalSelector.addGoal(2, new DropCowGoal(this));
+        this.goalSelector.addGoal(2, new DiveAndDropCowGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.FLYING_SPEED, 0.6D)
-                .add(Attributes.MOVEMENT_SPEED, 0.6D);
+                .add(Attributes.FOLLOW_RANGE, 64.0D) // Increased detection range
+                .add(Attributes.FLYING_SPEED, 1.2D) // Doubled speed
+                .add(Attributes.MOVEMENT_SPEED, 1.2D);
     }
 
-    static class DropCowGoal extends Goal {
+    static class DiveAndDropCowGoal extends Goal {
         private final ZucchiniEntity zucchini;
         public int chargeTime;
 
-        public DropCowGoal(ZucchiniEntity zucchini) {
+        public DiveAndDropCowGoal(ZucchiniEntity zucchini) {
             this.zucchini = zucchini;
-            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
         public boolean canUse() {
@@ -56,20 +56,23 @@ public class ZucchiniEntity extends Phantom {
             if (target == null) return;
 
             double distanceSq = this.zucchini.distanceToSqr(target);
-            if (distanceSq < 1024.0D) { // closer than eggplant
+
+            // Starts dropping cows when quite close (closer than before, within 15 blocks / 225 distance squared)
+            if (distanceSq < 225.0D) {
                 Level level = this.zucchini.level();
                 this.chargeTime++;
-                if (this.chargeTime == 40) {
+                if (this.chargeTime == 20) { // drops faster (every 1 second when close)
                     if (!level.isClientSide) {
                         Cow cow = EntityType.COW.create(level);
                         if (cow != null) {
                             cow.setPos(this.zucchini.getX(), this.zucchini.getY() - 1.0D, this.zucchini.getZ());
-                            cow.setDeltaMovement(0, -0.8, 0);
+                            // Drops fast
+                            cow.setDeltaMovement(0, -1.0, 0);
                             cow.addTag("exploding_cow");
                             level.addFreshEntity(cow);
                         }
                     }
-                    this.chargeTime = -40;
+                    this.chargeTime = -30; // Short cooldown
                 }
             } else if (this.chargeTime > 0) {
                 this.chargeTime--;
