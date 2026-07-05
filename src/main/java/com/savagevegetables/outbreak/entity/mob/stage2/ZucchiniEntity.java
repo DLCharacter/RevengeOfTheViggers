@@ -24,7 +24,15 @@ public class ZucchiniEntity extends Phantom {
     protected void registerGoals() {
         super.registerGoals();
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+
+        // We keep PhantomSweepAttackGoal because it handles diving. We just override doHurtTarget.
         this.goalSelector.addGoal(2, new DiveAndDropCowGoal(this));
+    }
+
+    // Override to prevent PhantomSweepAttackGoal from checking attack_damage which causes crashes
+    @Override
+    public boolean doHurtTarget(net.minecraft.world.entity.Entity entity) {
+        return false;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -32,7 +40,8 @@ public class ZucchiniEntity extends Phantom {
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D) // Increased detection range
                 .add(Attributes.FLYING_SPEED, 1.2D) // Doubled speed
-                .add(Attributes.MOVEMENT_SPEED, 1.2D);
+                .add(Attributes.MOVEMENT_SPEED, 1.2D)
+                .add(Attributes.ATTACK_DAMAGE, 2.0D); // Add ATTACK_DAMAGE to prevent crash
     }
 
     static class DiveAndDropCowGoal extends Goal {

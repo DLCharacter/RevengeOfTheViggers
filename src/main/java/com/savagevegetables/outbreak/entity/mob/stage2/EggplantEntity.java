@@ -26,14 +26,17 @@ public class EggplantEntity extends Ghast {
     protected void registerGoals() {
         super.registerGoals();
 
-        // Add custom Cow shooting goal (overrides default fireball goal because it will trigger earlier/be higher priority)
-        this.goalSelector.addGoal(2, new ShootCowGoal(this));
+        // Remove Ghast's shoot fireball goal by checking the string name of the class
+        this.goalSelector.removeAllGoals(goal -> goal.getClass().getSimpleName().contains("ShootFireball"));
+
+        // Add custom Cow shooting goal
+        this.goalSelector.addGoal(1, new ShootCowGoal(this));
 
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes()
+        return Ghast.createAttributes()
                 .add(Attributes.MAX_HEALTH, 30.0D)
                 .add(Attributes.FOLLOW_RANGE, 100.0D) // Increased detection range
                 .add(Attributes.FLYING_SPEED, 0.4D)
@@ -44,12 +47,16 @@ public class EggplantEntity extends Ghast {
         private final EggplantEntity eggplant;
         public int chargeTime;
 
-        public ShootCowGoal(EggplantEntity eggplant) {
-            this.eggplant = eggplant;
-        }
+
 
         public boolean canUse() {
             return this.eggplant.getTarget() != null && this.eggplant.distanceToSqr(this.eggplant.getTarget()) < 10000.0D;
+        }
+
+
+        public ShootCowGoal(EggplantEntity eggplant) {
+            this.eggplant = eggplant;
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK)); // Prevent fireball from running at same time
         }
 
         public void start() {
@@ -77,6 +84,7 @@ public class EggplantEntity extends Ghast {
 
                             cow.setDeltaMovement(shootDir);
                             cow.addTag("exploding_cow");
+                            cow.setNoGravity(true); // Fly straight like a fireball
 
                             this.eggplant.playSound(SoundEvents.GHAST_SHOOT, 1.0F, 1.0F);
                             level.addFreshEntity(cow);
