@@ -1,9 +1,7 @@
 package com.savagevegetables.outbreak.client;
 
-import com.savagevegetables.outbreak.client.model.EggplantBlimpModel;
-import com.savagevegetables.outbreak.client.model.ZucchiniKillerModel;
+import com.savagevegetables.outbreak.client.model.*;
 import com.savagevegetables.outbreak.init.EntityInit;
-import com.savagevegetables.outbreak.client.model.BasicCubeModel;
 import com.savagevegetables.outbreak.client.renderer.VegetableRenderer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,9 +14,9 @@ public class ClientModEvents {
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ModelLayers.PUMPKIN, () -> BasicCubeModel.createBodyLayer(14.0f, 14.0f));
-        event.registerLayerDefinition(ModelLayers.TOMATO, () -> BasicCubeModel.createBodyLayer(10.0f, 10.0f));
-        event.registerLayerDefinition(ModelLayers.CORN, () -> BasicCubeModel.createBodyLayer(8.0f, 24.0f));
+        event.registerLayerDefinition(ModelLayers.PUMPKIN, KillerPumpkinModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayers.TOMATO, RottenTomatoModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayers.CORN, CornMonsterModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayers.JERUSALEM_ARTICHOKE, () -> BasicCubeModel.createBodyLayer(32.0f, 40.0f));
         event.registerLayerDefinition(ModelLayers.RUTABAGA, () -> BasicCubeModel.createBodyLayer(40.0f, 40.0f));
         event.registerLayerDefinition(ModelLayers.CELERY, () -> BasicCubeModel.createBodyLayer(24.0f, 56.0f));
@@ -32,9 +30,9 @@ public class ClientModEvents {
         event.registerEntityRenderer(EntityInit.BULLET_PROJECTILE.get(), NoopRenderer::new); // fallback renderer
         event.registerEntityRenderer(EntityInit.VEGGIE_PROJECTILE.get(), NoopRenderer::new); // fallback renderer
 
-        event.registerEntityRenderer(EntityInit.PUMPKIN_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.PUMPKIN, "pumpkin", 0.5f));
-        event.registerEntityRenderer(EntityInit.TOMATO_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.TOMATO, "tomato", 0.4f));
-        event.registerEntityRenderer(EntityInit.CORN_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.CORN, "corn", 0.4f));
+        event.registerEntityRenderer(EntityInit.PUMPKIN_ENTITY.get(), com.savagevegetables.outbreak.client.renderer.PumpkinRenderer::new);
+        event.registerEntityRenderer(EntityInit.TOMATO_ENTITY.get(), com.savagevegetables.outbreak.client.renderer.TomatoRenderer::new);
+        event.registerEntityRenderer(EntityInit.CORN_ENTITY.get(), com.savagevegetables.outbreak.client.renderer.CornRenderer::new);
         event.registerEntityRenderer(EntityInit.JERUSALEM_ARTICHOKE_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.JERUSALEM_ARTICHOKE, "jerusalem_artichoke", 1.0f));
         event.registerEntityRenderer(EntityInit.RUTABAGA_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.RUTABAGA, "rutabaga", 1.2f));
         event.registerEntityRenderer(EntityInit.CELERY_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.CELERY, "celery", 0.8f));
