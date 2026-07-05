@@ -129,7 +129,7 @@ public class EggplantEntity extends Ghast {
                             cow.setDeltaMovement(shootDir);
                             cow.addTag("exploding_cow_eggplant"); // Distinguish from zucchini
                             cow.setNoGravity(true); // Fly straight like a fireball
-                            cow.setNoAi(true); // Stop cow from trying to walk/swim
+
 
                             // Save original vector so we can maintain it in tick
                             cow.getPersistentData().putDouble("flyX", shootDir.x);

@@ -82,7 +82,7 @@ public class ZucchiniEntity extends Phantom {
                             cow.setPos(this.zucchini.getX(), this.zucchini.getY() - 1.0D, this.zucchini.getZ());
                             // Drops fast
                             cow.setDeltaMovement(0, -1.5, 0);
-                            cow.setNoAi(true);
+
                             cow.addTag("exploding_cow_zucchini");
                             level.addFreshEntity(cow);
                         }
