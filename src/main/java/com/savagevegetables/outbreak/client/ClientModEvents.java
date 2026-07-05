@@ -1,5 +1,7 @@
 package com.savagevegetables.outbreak.client;
 
+import com.savagevegetables.outbreak.client.model.EggplantBlimpModel;
+import com.savagevegetables.outbreak.client.model.ZucchiniKillerModel;
 import com.savagevegetables.outbreak.init.EntityInit;
 import com.savagevegetables.outbreak.client.model.BasicCubeModel;
 import com.savagevegetables.outbreak.client.renderer.VegetableRenderer;
@@ -21,8 +23,8 @@ public class ClientModEvents {
         event.registerLayerDefinition(ModelLayers.RUTABAGA, () -> BasicCubeModel.createBodyLayer(40.0f, 40.0f));
         event.registerLayerDefinition(ModelLayers.CELERY, () -> BasicCubeModel.createBodyLayer(24.0f, 56.0f));
         event.registerLayerDefinition(ModelLayers.HYBRID, () -> BasicCubeModel.createBodyLayer(10.0f, 31.0f));
-        event.registerLayerDefinition(ModelLayers.EGGPLANT, () -> BasicCubeModel.createBodyLayer(64.0f, 64.0f));
-        event.registerLayerDefinition(ModelLayers.ZUCCHINI, () -> BasicCubeModel.createBodyLayer(14.0f, 8.0f));
+        event.registerLayerDefinition(ModelLayers.EGGPLANT, EggplantBlimpModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayers.ZUCCHINI, ZucchiniKillerModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -37,7 +39,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(EntityInit.RUTABAGA_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.RUTABAGA, "rutabaga", 1.2f));
         event.registerEntityRenderer(EntityInit.CELERY_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.CELERY, "celery", 0.8f));
         event.registerEntityRenderer(EntityInit.HYBRID_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.HYBRID, "hybrid", 0.5f));
-        event.registerEntityRenderer(EntityInit.EGGPLANT_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.EGGPLANT, "eggplant", 2.0f));
-        event.registerEntityRenderer(EntityInit.ZUCCHINI_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.ZUCCHINI, "zucchini", 0.6f));
+        event.registerEntityRenderer(EntityInit.EGGPLANT_ENTITY.get(), com.savagevegetables.outbreak.client.renderer.EggplantRenderer::new);
+        event.registerEntityRenderer(EntityInit.ZUCCHINI_ENTITY.get(), com.savagevegetables.outbreak.client.renderer.ZucchiniRenderer::new);
     }
 }
