@@ -39,9 +39,9 @@ public class ModEvents {
                     cow.setDeltaMovement(fX, fY, fZ);
                 }
 
-                if (!level.isClientSide) {
+                                if (!level.isClientSide && cow.tickCount > 5) {
                     // Check entity collisions
-                    java.util.List<net.minecraft.world.entity.player.Player> players = level.getEntitiesOfClass(net.minecraft.world.entity.player.Player.class, cow.getBoundingBox().inflate(1.5D));
+                    java.util.List<net.minecraft.world.entity.player.Player> players = level.getEntitiesOfClass(net.minecraft.world.entity.player.Player.class, cow.getBoundingBox().inflate(0.5D));
                     boolean hitPlayer = false;
                     for (net.minecraft.world.entity.player.Player p : players) {
                         if (!p.isSpectator() && !p.isCreative()) {
