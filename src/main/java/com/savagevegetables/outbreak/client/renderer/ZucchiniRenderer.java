@@ -9,15 +9,15 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ZucchiniRenderer extends MobRenderer<ZucchiniEntity, ZucchiniKillerModel<ZucchiniEntity>> {
     // Путь к твоей красивой текстуре
-    private static final ResourceLocation EGGPLANT_TEXTURE = new ResourceLocation("savage_vegetables", "textures/entity/zucchini.png");
+    private static final ResourceLocation ZUCCHINI_TEXTURE = new ResourceLocation("savage_vegetables", "textures/entity/zucchini.png");
 
     public ZucchiniRenderer(EntityRendererProvider.Context context) {
-        // 2.0f в конце - это размер тени под мобом. Можешь поменять на свой!
-        super(context, new ZucchiniKillerModel<>(context.bakeLayer(ModelLayers.EGGPLANT)), 1.0f);
+        // 1.0f в конце - это размер тени под мобом. Можешь поменять на свой!
+        super(context, new ZucchiniKillerModel<>(context.bakeLayer(ModelLayers.ZUCCHINI)), 1.0f);
     }
 
     @Override
     public ResourceLocation getTextureLocation(ZucchiniEntity entity) {
-        return EGGPLANT_TEXTURE;
+        return ZUCCHINI_TEXTURE;
     }
 }
