@@ -2,9 +2,7 @@ package com.savagevegetables.outbreak.client.renderer;
 
 import com.savagevegetables.outbreak.client.ModelLayers;
 import com.savagevegetables.outbreak.client.model.JerusalemArtichokeBossModel;
-import com.savagevegetables.outbreak.client.model.ZucchiniKillerModel;
 import com.savagevegetables.outbreak.entity.mob.boss.JerusalemArtichokeEntity;
-import com.savagevegetables.outbreak.entity.mob.stage2.ZucchiniEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
