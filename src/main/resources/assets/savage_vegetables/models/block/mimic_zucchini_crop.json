@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "savage_vegetables:block/zucchini_crop"
+  }
+}

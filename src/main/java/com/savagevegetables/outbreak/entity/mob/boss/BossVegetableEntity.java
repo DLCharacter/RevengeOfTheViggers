@@ -38,13 +38,7 @@ public abstract class BossVegetableEntity extends Monster {
     }
 
     @Override
-    public void die(net.minecraft.world.damagesource.DamageSource damageSource) {
-        super.die(damageSource);
-        if (!this.level().isClientSide() && this.level() instanceof ServerLevel serverLevel) {
-            OutbreakSavedData data = OutbreakSavedData.get(serverLevel);
-            if (!data.isStage2Active()) {
-                data.setStage2Active(true);
-            }
+
         }
     }
 }
