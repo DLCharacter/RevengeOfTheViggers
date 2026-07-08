@@ -59,4 +59,30 @@ public class ModEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onEat(net.minecraftforge.event.entity.living.LivingEntityUseItemEvent.Finish event) {
+        if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof net.minecraft.world.entity.player.Player player) {
+            net.minecraft.world.item.ItemStack item = event.getItem();
+            if (item.isEdible() && item.getItem().getFoodProperties() != null) {
+                // Check if it's a vegetable (either our custom progression food or a vanilla vegetable)
+                boolean isVeggie = item.getItem() instanceof com.savagevegetables.outbreak.item.custom.ProgressionFoodItem ||
+                                   item.getItem() == net.minecraft.world.item.Items.CARROT ||
+                                   item.getItem() == net.minecraft.world.item.Items.POTATO ||
+                                   item.getItem() == net.minecraft.world.item.Items.BAKED_POTATO ||
+                                   item.getItem() == net.minecraft.world.item.Items.BEETROOT;
+
+                if (isVeggie) {
+                    com.savagevegetables.outbreak.world.OutbreakSavedData data = com.savagevegetables.outbreak.world.OutbreakSavedData.get((net.minecraft.server.level.ServerLevel) player.level());
+                    int previousStage = data.getCurrentStage();
+                    data.addVeggieEaten();
+                    int newStage = data.getCurrentStage();
+
+                    if (newStage > previousStage) {
+                        player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.savage_vegetables.stage_up", newStage), false);
+                    }
+                }
+            }
+        }
+    }
 }
