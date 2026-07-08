@@ -62,7 +62,7 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onEat(net.minecraftforge.event.entity.living.LivingEntityUseItemEvent.Finish event) {
-        if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof net.minecraft.world.entity.player.Player player) {
+        if (!event.getEntity().level().isClientSide && event.getEntity() instanceof net.minecraft.world.entity.player.Player player) {
             net.minecraft.world.item.ItemStack item = event.getItem();
             if (item.isEdible() && item.getItem().getFoodProperties() != null) {
                 // Check if it's a vegetable (either our custom progression food or a vanilla vegetable)
