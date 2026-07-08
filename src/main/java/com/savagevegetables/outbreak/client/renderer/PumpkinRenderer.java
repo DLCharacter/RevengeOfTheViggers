@@ -13,7 +13,7 @@ public class PumpkinRenderer extends MobRenderer<PumpkinEntity, KillerPumpkinMod
 
     public PumpkinRenderer(EntityRendererProvider.Context context) {
         // 2.0f в конце - это размер тени под мобом. Можешь поменять на свой!
-        super(context, new KillerPumpkinModel<>(context.bakeLayer(ModelLayers.PUMPKIN)), 3.0f);
+        super(context, new KillerPumpkinModel<>(context.bakeLayer(ModelLayers.PUMPKIN)), 0.9f);
     }
 
     @Override

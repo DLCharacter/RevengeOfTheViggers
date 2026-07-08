@@ -13,7 +13,7 @@ public class TomatoRenderer extends MobRenderer<TomatoEntity, RottenTomatoModel<
 
     public TomatoRenderer(EntityRendererProvider.Context context) {
         // 2.0f в конце - это размер тени под мобом. Можешь поменять на свой!
-        super(context, new RottenTomatoModel<>(context.bakeLayer(ModelLayers.TOMATO)), 3.0f);
+        super(context, new RottenTomatoModel<>(context.bakeLayer(ModelLayers.TOMATO)), 0.8f);
     }
 
     @Override

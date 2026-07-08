@@ -13,7 +13,7 @@ public class CornRenderer extends MobRenderer<CornEntity, CornMonsterModel<CornE
 
     public CornRenderer(EntityRendererProvider.Context context) {
         // 2.0f в конце - это размер тени под мобом. Можешь поменять на свой!
-        super(context, new CornMonsterModel<>(context.bakeLayer(ModelLayers.CORN)), 1.5f);
+        super(context, new CornMonsterModel<>(context.bakeLayer(ModelLayers.CORN)), 0.5f);
     }
 
     @Override
