@@ -36,7 +36,4 @@ public abstract class BossVegetableEntity extends Monster {
                 .add(Attributes.ATTACK_DAMAGE, 10.0D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.8D);
     }
-
-
-    }
 }
