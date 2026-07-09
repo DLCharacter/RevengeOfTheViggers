@@ -85,4 +85,9 @@ public class ModEvents {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onCommandsRegister(net.minecraftforge.event.RegisterCommandsEvent event) {
+        com.savagevegetables.outbreak.command.ModCommands.register(event.getDispatcher());
+    }
 }
