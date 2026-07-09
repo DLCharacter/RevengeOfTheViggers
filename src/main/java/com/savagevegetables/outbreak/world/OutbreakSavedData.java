@@ -6,30 +6,112 @@ import net.minecraft.world.level.saveddata.SavedData;
 
 public class OutbreakSavedData extends SavedData {
 
-    private boolean isStage2Active = false;
+    // Progression Stages:
+    // 0 = Normal Minecraft
+    // 1 = Stage 1 (Basic Veggies in waves)
+    // 2 = Stage 2 (Advanced Veggies in waves)
+    // 3 = Stage 3 (Harder advanced veggies)
+    // 4 = Stage 4 (Harder, bosses drop fruit)
+    // 5 = Stage 5 (Harder, need eating progression)
+    // 6 = Stage 6 (Random night spawns)
+    // 7 = Final Stage (Bosses in waves)
+    private int currentStage = 0;
+
+    // Counters for progression
+    private int veggiesEaten = 0;
+    private int bossFruitsEaten = 0;
+    private int bossesDefeated = 0;
 
     public OutbreakSavedData() {
     }
 
     public static OutbreakSavedData load(CompoundTag nbt) {
         OutbreakSavedData data = new OutbreakSavedData();
-        data.isStage2Active = nbt.getBoolean("IsStage2Active");
+        data.currentStage = nbt.getInt("CurrentStage");
+        data.veggiesEaten = nbt.getInt("VeggiesEaten");
+        data.bossFruitsEaten = nbt.getInt("BossFruitsEaten");
+        data.bossesDefeated = nbt.getInt("BossesDefeated");
+
+        // Backwards compatibility with previous version
+        if (nbt.contains("IsStage2Active") && nbt.getBoolean("IsStage2Active") && data.currentStage < 2) {
+            data.currentStage = 2;
+        }
         return data;
     }
 
     @Override
     public CompoundTag save(CompoundTag nbt) {
-        nbt.putBoolean("IsStage2Active", isStage2Active);
+        nbt.putInt("CurrentStage", currentStage);
+        nbt.putInt("VeggiesEaten", veggiesEaten);
+        nbt.putInt("BossFruitsEaten", bossFruitsEaten);
+        nbt.putInt("BossesDefeated", bossesDefeated);
         return nbt;
     }
 
+    public int getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setStage(int stage) {
+        this.currentStage = Math.max(0, Math.min(stage, 7));
+        this.setDirty();
+    }
+
+    public void addVeggieEaten() {
+        if (this.currentStage == 0) {
+            this.setStage(1);
+            return;
+        }
+
+        this.veggiesEaten++;
+        this.setDirty();
+
+        // Progression thresholds for stages 4 -> 5 -> 6 -> 7
+        if (this.currentStage == 4 && this.veggiesEaten >= 50) {
+            this.setStage(5);
+            this.veggiesEaten = 0;
+        } else if (this.currentStage == 5 && this.veggiesEaten >= 100) {
+            this.setStage(6);
+            this.veggiesEaten = 0;
+        } else if (this.currentStage == 6 && this.veggiesEaten >= 200) {
+            this.setStage(7);
+            this.veggiesEaten = 0;
+        }
+    }
+
+    public void addBossDefeated() {
+        this.bossesDefeated++;
+        this.setDirty();
+        checkDowngrade();
+    }
+
+    public void addBossFruitEaten() {
+        this.bossFruitsEaten++;
+        this.setDirty();
+        checkDowngrade();
+    }
+
+    private void checkDowngrade() {
+        if (this.currentStage >= 5 && this.bossesDefeated >= 7 && this.bossFruitsEaten >= 7) {
+            this.setStage(this.currentStage - 1);
+            this.bossesDefeated -= 7;
+            this.bossFruitsEaten -= 7;
+            this.veggiesEaten = 0; // Reset eating progress for the stage we just downgraded to
+            this.setDirty();
+        }
+    }
+
+    // Kept for backward compatibility in code, redirects to new logic
     public boolean isStage2Active() {
-        return isStage2Active;
+        return currentStage >= 2;
     }
 
     public void setStage2Active(boolean stage2Active) {
-        this.isStage2Active = stage2Active;
-        this.setDirty();
+        if (stage2Active && currentStage < 2) {
+            this.setStage(2);
+        } else if (!stage2Active && currentStage >= 2) {
+            this.setStage(1);
+        }
     }
 
     public static OutbreakSavedData get(ServerLevel level) {
