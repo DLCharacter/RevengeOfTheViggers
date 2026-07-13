@@ -1,0 +1,8 @@
+.gradle/
+build/
+bin/
+out/
+*.class
+.idea/
+*.iml
+src/main/resources/assets/
