@@ -1,4 +1,7 @@
-package com.savagevegetables.outbreak.entity.mob.vegetables;
+with open('src/main/java/com/savagevegetables/outbreak/entity/mob/vegetables/RadishEntity.java', 'r') as f:
+    content = f.read()
+
+correct_code = """package com.savagevegetables.outbreak.entity.mob.vegetables;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -151,3 +154,7 @@ public class RadishEntity extends VegetableEntity {
         }
     }
 }
+"""
+
+with open('src/main/java/com/savagevegetables/outbreak/entity/mob/vegetables/RadishEntity.java', 'w') as f:
+    f.write(correct_code)

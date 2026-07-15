@@ -23,13 +23,13 @@ public class CornEntity extends VegetableEntity implements RangedAttackMob {
 
     @Override
     protected void registerGoals() {
+        super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         // Slower shooting (was 10, now 40 ticks = 2 seconds)
         this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.25D, 40, 15.0F));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-    }
+        }
 
     @Override
     public void performRangedAttack(LivingEntity target, float velocity) {

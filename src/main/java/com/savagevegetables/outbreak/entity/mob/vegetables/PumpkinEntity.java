@@ -20,13 +20,13 @@ public class PumpkinEntity extends VegetableEntity {
 
     @Override
     protected void registerGoals() {
+        super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         // Using MeleeAttackGoal with high speed to simulate jumping onto the target
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2D, false));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-    }
+        }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
