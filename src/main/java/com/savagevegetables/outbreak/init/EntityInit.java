@@ -31,32 +31,8 @@ public class EntityInit {
                     .sized(0.6f, 0.6f).build("tomato_entity"));
 
     public static final RegistryObject<EntityType<CornEntity>> CORN_ENTITY = ENTITY_TYPES.register("corn_entity",
-            () -> EntityType.Builder.of(CornEntity::new, net.minecraft.world.entity.MobCategory.MONSTER)
+            () -> EntityType.Builder.of(CornEntity::new, MobCategory.MONSTER)
                     .sized(0.5f, 1.5f).build("corn_entity"));
-
-    public static final RegistryObject<EntityType<LeekEntity>> LEEK_ENTITY = ENTITY_TYPES.register("leek",
-            () -> EntityType.Builder.of(LeekEntity::new, net.minecraft.world.entity.MobCategory.MONSTER)
-                    .sized(0.6f, 1.8f).build("leek"));
-
-    public static final RegistryObject<EntityType<CucumberEntity>> CUCUMBER_ENTITY = ENTITY_TYPES.register("cucumber",
-            () -> EntityType.Builder.of(CucumberEntity::new, net.minecraft.world.entity.MobCategory.MONSTER)
-                    .sized(0.5f, 1.5f).build("cucumber"));
-
-    public static final RegistryObject<EntityType<CarrotEntity>> CARROT_ENTITY = ENTITY_TYPES.register("carrot",
-            () -> EntityType.Builder.of(CarrotEntity::new, net.minecraft.world.entity.MobCategory.MONSTER)
-                    .sized(0.6f, 1.8f).build("carrot"));
-
-    public static final RegistryObject<EntityType<PotatoEntity>> POTATO_ENTITY = ENTITY_TYPES.register("potato",
-            () -> EntityType.Builder.of(PotatoEntity::new, net.minecraft.world.entity.MobCategory.MONSTER)
-                    .sized(0.8f, 0.8f).build("potato"));
-
-    public static final RegistryObject<EntityType<BroccoliEntity>> BROCCOLI_ENTITY = ENTITY_TYPES.register("broccoli",
-            () -> EntityType.Builder.of(BroccoliEntity::new, net.minecraft.world.entity.MobCategory.MONSTER)
-                    .sized(1.2f, 1.8f).build("broccoli"));
-
-    public static final RegistryObject<EntityType<RadishEntity>> RADISH_ENTITY = ENTITY_TYPES.register("radish",
-            () -> EntityType.Builder.of(RadishEntity::new, net.minecraft.world.entity.MobCategory.MONSTER)
-                    .sized(0.8f, 0.8f).build("radish"));
 
     // Stage 2 Bosses
     public static final RegistryObject<EntityType<com.savagevegetables.outbreak.entity.mob.boss.JerusalemArtichokeEntity>> JERUSALEM_ARTICHOKE_ENTITY = ENTITY_TYPES.register("jerusalem_artichoke",

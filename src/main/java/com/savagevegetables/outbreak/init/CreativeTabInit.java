@@ -24,18 +24,6 @@ public class CreativeTabInit {
                 output.accept(ItemInit.RUTABAGA_SEED.get());
                 output.accept(ItemInit.CELERY_SEED.get());
 
-                output.accept(ItemInit.TOMATO_SEED.get());
-                output.accept(ItemInit.CORN_SEED.get());
-                output.accept(ItemInit.EGGPLANT_SEED.get());
-                output.accept(ItemInit.ZUCCHINI_SEED.get());
-                output.accept(ItemInit.CUCUMBER_SEED.get());
-                output.accept(ItemInit.BROCCOLI_SEED.get());
-                output.accept(ItemInit.RADISH_SEED.get());
-
-                output.accept(ItemInit.JERUSALEM_ARTICHOKE_FRUIT.get());
-                output.accept(ItemInit.RUTABAGA_FRUIT.get());
-                output.accept(ItemInit.CELERY_FRUIT.get());
-
                 output.accept(BlockInit.MUTATED_SOIL.get());
                 output.accept(BlockInit.JERUSALEM_ARTICHOKE_CROP.get());
                 output.accept(BlockInit.RUTABAGA_CROP.get());
@@ -44,12 +32,6 @@ public class CreativeTabInit {
                 output.accept(ItemInit.PUMPKIN_SPAWN_EGG.get());
                 output.accept(ItemInit.TOMATO_SPAWN_EGG.get());
                 output.accept(ItemInit.CORN_SPAWN_EGG.get());
-                output.accept(ItemInit.LEEK_SPAWN_EGG.get());
-                output.accept(ItemInit.CUCUMBER_SPAWN_EGG.get());
-                output.accept(ItemInit.CARROT_SPAWN_EGG.get());
-                output.accept(ItemInit.POTATO_SPAWN_EGG.get());
-                output.accept(ItemInit.BROCCOLI_SPAWN_EGG.get());
-                output.accept(ItemInit.RADISH_SPAWN_EGG.get());
                 output.accept(ItemInit.JERUSALEM_ARTICHOKE_SPAWN_EGG.get());
                 output.accept(ItemInit.RUTABAGA_SPAWN_EGG.get());
                 output.accept(ItemInit.CELERY_SPAWN_EGG.get());
