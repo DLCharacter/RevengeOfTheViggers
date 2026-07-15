@@ -1,4 +1,7 @@
-package com.savagevegetables.outbreak.event;
+with open('src/main/java/com/savagevegetables/outbreak/event/ModEvents.java', 'r') as f:
+    content = f.read()
+
+correct_code = """package com.savagevegetables.outbreak.event;
 
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.level.Level;
@@ -228,3 +231,7 @@ public class ModEvents {
         }
     }
 }
+"""
+
+with open('src/main/java/com/savagevegetables/outbreak/event/ModEvents.java', 'w') as f:
+    f.write(correct_code)

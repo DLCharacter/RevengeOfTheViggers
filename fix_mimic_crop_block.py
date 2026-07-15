@@ -1,4 +1,7 @@
-package com.savagevegetables.outbreak.block;
+with open('src/main/java/com/savagevegetables/outbreak/block/MimicCropBlock.java', 'r') as f:
+    content = f.read()
+
+correct_code = """package com.savagevegetables.outbreak.block;
 
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.ItemLike;
@@ -24,3 +27,7 @@ public class MimicCropBlock extends CropBlock {
         return net.minecraft.world.item.Items.WHEAT_SEEDS;
     }
 }
+"""
+
+with open('src/main/java/com/savagevegetables/outbreak/block/MimicCropBlock.java', 'w') as f:
+    f.write(correct_code)
