@@ -1,36 +1,13 @@
-package com.savagevegetables.outbreak.world.wave;
+import re
 
-import com.savagevegetables.outbreak.init.EntityInit;
-import com.savagevegetables.outbreak.init.SoundInit;
-import com.savagevegetables.outbreak.world.OutbreakSavedData;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+with open('src/main/java/com/savagevegetables/outbreak/world/wave/WaveManager.java', 'r') as f:
+    content = f.read()
 
-import java.util.Random;
-import java.util.List;
-import java.util.ArrayList;
-
-@Mod.EventBusSubscriber
-public class WaveManager {
-
-    private static final Random RANDOM = new Random();
-
-    @SubscribeEvent
-    public static void onServerTick(TickEvent.ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            for (ServerLevel level : event.getServer().getAllLevels()) {
-                if (level.dimension() == net.minecraft.world.level.Level.OVERWORLD) {
-
+# Add night spawning loop
+night_spawn = """
                     if (level.getDayTime() % 24000 == 13000) {
                         // Trigger at the start of night (time 13000) based on world time
+                        long day = level.getDayTime() / 24000L;
                         boolean isNewMoon = (level.getMoonPhase() == 4); // 4 is new moon
 
                         OutbreakSavedData data = OutbreakSavedData.get(level);
@@ -58,12 +35,12 @@ public class WaveManager {
                                 spawnWave(level, player, stage, false);
                             }
                         }
-                    }
-                }
-            }
-        }
-    }
+                    }"""
 
+content = re.sub(r'if \(level\.getDayTime\(\) % 24000 == 13000\) \{.*?\}', night_spawn, content, flags=re.DOTALL)
+
+# Modify spawnWave signature and logic
+spawn_wave_code = """
     private static void spawnWave(ServerLevel level, ServerPlayer player, int stage, boolean isNewMoon) {
         int mobCount = isNewMoon ? 15 : 3;
         if (stage >= 2) mobCount += 2;
@@ -73,12 +50,6 @@ public class WaveManager {
         List<EntityType<? extends Mob>> pool = new ArrayList<>();
         pool.add(EntityInit.PUMPKIN_ENTITY.get());
         pool.add(EntityInit.TOMATO_ENTITY.get());
-        pool.add(EntityInit.LEEK_ENTITY.get());
-        pool.add(EntityInit.CUCUMBER_ENTITY.get());
-        pool.add(EntityInit.POTATO_ENTITY.get());
-        pool.add(EntityInit.CARROT_ENTITY.get());
-        pool.add(EntityInit.BROCCOLI_ENTITY.get());
-        pool.add(EntityInit.RADISH_ENTITY.get());
 
         if (stage >= 2) {
             pool.add(EntityInit.CORN_ENTITY.get());
@@ -94,10 +65,6 @@ public class WaveManager {
             pool.add(EntityInit.RUTABAGA_ENTITY.get());
             pool.add(EntityInit.CELERY_ENTITY.get());
         }
-
-        // Play wave spawn sound to the player
-        level.playSound(null, player.blockPosition(), SoundInit.WAVE_SPAWN.get(),
-                net.minecraft.sounds.SoundSource.HOSTILE, 1.0f, 1.0f);
 
         for (int i = 0; i < mobCount; i++) {
             EntityType<? extends Mob> type = pool.get(RANDOM.nextInt(pool.size()));
@@ -121,3 +88,9 @@ public class WaveManager {
         }
     }
 }
+"""
+
+content = re.sub(r'private static void spawnWave.*?\}[\s\n]*\}[\s\n]*\}', spawn_wave_code, content, flags=re.DOTALL)
+
+with open('src/main/java/com/savagevegetables/outbreak/world/wave/WaveManager.java', 'w') as f:
+    f.write(content)

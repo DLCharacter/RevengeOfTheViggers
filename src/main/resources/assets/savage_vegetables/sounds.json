@@ -1,0 +1,8 @@
+{
+  "wave_spawn": {
+    "category": "hostile",
+    "sounds": [
+      "savage_vegetables:wave_spawn"
+    ]
+  }
+}

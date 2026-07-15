@@ -15,7 +15,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import com.savagevegetables.outbreak.init.BlockInit;
 import com.savagevegetables.outbreak.init.ItemInit;
-import com.savagevegetables.outbreak.init.SoundInit;
 import com.savagevegetables.outbreak.init.CreativeTabInit;
 import com.savagevegetables.outbreak.init.EntityInit;
 import com.savagevegetables.outbreak.init.StructureInit;
@@ -45,7 +44,6 @@ public class SavageVegetablesOutbreak
         BlockInit.BLOCKS.register(modEventBus);
         CreativeTabInit.CREATIVE_MODE_TABS.register(modEventBus);
         EntityInit.ENTITY_TYPES.register(modEventBus);
-        SoundInit.SOUNDS.register(modEventBus);
         StructureInit.STRUCTURE_TYPES.register(modEventBus);
         StructurePieceInit.STRUCTURE_PIECE_TYPES.register(modEventBus);
 

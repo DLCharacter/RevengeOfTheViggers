@@ -1,0 +1,87 @@
+--- src/main/java/com/savagevegetables/outbreak/world/wave/WaveManager.java
++++ src/main/java/com/savagevegetables/outbreak/world/wave/WaveManager.java
+@@ -32,23 +32,32 @@
+                         boolean isNewMoon = (level.getMoonPhase() == 4); // 4 is new moon
+
+                         OutbreakSavedData data = OutbreakSavedData.get(level);
+-                        boolean stage2 = data.isStage2Active();
++                        int stage = data.getCurrentStage();
+
+-                        for (ServerPlayer player : level.players()) {
+-                            if (isNewMoon) {
+-                                BlockPos respawnPos = player.getRespawnPosition();
+-                                if (respawnPos != null && player.distanceToSqr(respawnPos.getX(), respawnPos.getY(), respawnPos.getZ()) < 2500) {
+-                                    // Spawns massive wave only if near bed/base (50 blocks radius)
+-                                    spawnWave(level, player, stage2, true);
++                        if (stage > 0) {
++                            for (ServerPlayer player : level.players()) {
++                                if (isNewMoon) {
++                                    BlockPos respawnPos = player.getRespawnPosition();
++                                    if (respawnPos != null && player.distanceToSqr(respawnPos.getX(), respawnPos.getY(), respawnPos.getZ()) < 2500) {
++                                        // Spawns massive wave only if near bed/base (50 blocks radius)
++                                        spawnWave(level, player, stage, true);
++                                    }
++                                } else {
++                                    spawnWave(level, player, stage, false);
+                                 }
+-                            } else {
+-                                spawnWave(level, player, stage2, false);
+                             }
+                         }
+                     }
++
++                    // Stage 6 and 7 random night spawns
++                    OutbreakSavedData data = OutbreakSavedData.get(level);
++                    int stage = data.getCurrentStage();
++                    if (stage >= 6 && level.isNight() && level.getGameTime() % 400 == 0) {
++                        for (ServerPlayer player : level.players()) {
++                            if (RANDOM.nextDouble() < 0.3) {
++                                spawnWave(level, player, stage, false);
++                            }
++                        }
++                    }
+                 }
+             }
+         }
+     }
+
+-    private static void spawnWave(ServerLevel level, ServerPlayer player, boolean stage2, boolean isNewMoon) {
+-        int mobCount = isNewMoon ? 15 : 3;
+-        if (stage2) mobCount += 5;
++    private static void spawnWave(ServerLevel level, ServerPlayer player, int stage, boolean isNewMoon) {
++        int mobCount = isNewMoon ? 15 : 3;
++
++        if (stage >= 2) mobCount += 2;
++        if (stage >= 4) mobCount += 2;
++        if (stage >= 5) mobCount += 3;
+
+         List<EntityType<? extends Mob>> pool = new ArrayList<>();
+         pool.add(EntityInit.PUMPKIN_ENTITY.get());
+         pool.add(EntityInit.TOMATO_ENTITY.get());
+-        pool.add(EntityInit.CORN_ENTITY.get());
++        // We will add more pool entities later once they are created
++        // pool.add(EntityInit.LEEK_ENTITY.get());
++        // pool.add(EntityInit.CUCUMBER_ENTITY.get());
++        // pool.add(EntityInit.POTATO_ENTITY.get());
++        // pool.add(EntityInit.CARROT_ENTITY.get());
++        // pool.add(EntityInit.BROCCOLI_ENTITY.get());
++        // pool.add(EntityInit.RADISH_ENTITY.get());
+
+-        if (stage2) {
++        if (stage >= 2) {
++            pool.add(EntityInit.CORN_ENTITY.get());
+             pool.add(EntityInit.HYBRID_ENTITY.get());
+             if (isNewMoon) {
+                 pool.add(EntityInit.EGGPLANT_ENTITY.get());
+                 pool.add(EntityInit.ZUCCHINI_ENTITY.get());
+             }
+         }
++
++        if (stage >= 7) {
++            pool.add(EntityInit.JERUSALEM_ARTICHOKE_ENTITY.get());
++            pool.add(EntityInit.RUTABAGA_ENTITY.get());
++            pool.add(EntityInit.CELERY_ENTITY.get());
++        }
+
+         for (int i = 0; i < mobCount; i++) {
+             EntityType<? extends Mob> type = pool.get(RANDOM.nextInt(pool.size()));

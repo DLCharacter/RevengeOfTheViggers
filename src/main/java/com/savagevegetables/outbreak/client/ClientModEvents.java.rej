@@ -1,0 +1,16 @@
+--- ClientModEvents.java
++++ ClientModEvents.java
+@@ -34,6 +34,13 @@
+         event.registerEntityRenderer(EntityInit.CELERY_ENTITY.get(), CeleryRenderer::new);
+         event.registerEntityRenderer(EntityInit.HYBRID_ENTITY.get(), HybridCabbageStalkerRenderer::new);
+         event.registerEntityRenderer(EntityInit.EGGPLANT_ENTITY.get(), EggplantRenderer::new);
+         event.registerEntityRenderer(EntityInit.ZUCCHINI_ENTITY.get(), ZucchiniRenderer::new);
++
++        event.registerEntityRenderer(EntityInit.LEEK_ENTITY.get(), mgr -> new VegetableRenderer(mgr, "leek"));
++        event.registerEntityRenderer(EntityInit.CUCUMBER_ENTITY.get(), mgr -> new VegetableRenderer(mgr, "cucumber"));
++        event.registerEntityRenderer(EntityInit.POTATO_ENTITY.get(), mgr -> new VegetableRenderer(mgr, "potato"));
++        event.registerEntityRenderer(EntityInit.CARROT_ENTITY.get(), mgr -> new VegetableRenderer(mgr, "carrot"));
++        event.registerEntityRenderer(EntityInit.BROCCOLI_ENTITY.get(), mgr -> new VegetableRenderer(mgr, "broccoli"));
++        event.registerEntityRenderer(EntityInit.RADISH_ENTITY.get(), mgr -> new VegetableRenderer(mgr, "radish"));
+     }
+ }

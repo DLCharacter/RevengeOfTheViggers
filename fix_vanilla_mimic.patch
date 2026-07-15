@@ -1,0 +1,67 @@
+--- src/main/java/com/savagevegetables/outbreak/event/ModEvents.java
++++ src/main/java/com/savagevegetables/outbreak/event/ModEvents.java
+@@ -8,6 +8,13 @@
+ import net.minecraftforge.eventbus.api.SubscribeEvent;
+ import net.minecraftforge.fml.common.Mod;
+ import com.savagevegetables.outbreak.SavageVegetablesOutbreak;
++import net.minecraftforge.event.level.BlockEvent;
++import net.minecraft.world.level.block.Blocks;
++import net.minecraft.world.level.block.CropBlock;
++import net.minecraft.world.entity.Mob;
++import net.minecraft.core.BlockPos;
++import com.savagevegetables.outbreak.command.ModCommands;
++import com.savagevegetables.outbreak.init.EntityInit;
+
+ @Mod.EventBusSubscriber(modid = SavageVegetablesOutbreak.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+ public class ModEvents {
+@@ -86,4 +93,51 @@
+     public static void onCommandsRegister(net.minecraftforge.event.RegisterCommandsEvent event) {
+         com.savagevegetables.outbreak.command.ModCommands.register(event.getDispatcher());
+     }
++
++    @SubscribeEvent
++    public static void onCropGrow(BlockEvent.CropGrowEvent.Post event) {
++        if (event.getLevel() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
++            net.minecraft.world.level.block.state.BlockState state = event.getState();
++            if (state.getBlock() instanceof CropBlock crop && crop.isMaxAge(state)) {
++
++                double chance = 0.0;
++                if (ModCommands.overrideMimicChance >= 0) {
++                    chance = ModCommands.overrideMimicChance;
++                } else {
++                    com.savagevegetables.outbreak.world.OutbreakSavedData data = com.savagevegetables.outbreak.world.OutbreakSavedData.get(serverLevel);
++                    int stage = data.getCurrentStage();
++                    if (stage >= 7) chance = 1.0;
++                    else if (stage >= 6) chance = 0.50;
++                    else if (stage >= 4) chance = 0.25;
++                    else if (stage >= 2) chance = 0.10;
++                }
++
++                if (serverLevel.random.nextDouble() < chance) {
++                    Mob mimicEntity = null;
++                    if (state.is(Blocks.CARROTS)) {
++                        mimicEntity = EntityInit.CARROT_ENTITY.get().create(serverLevel);
++                    } else if (state.is(Blocks.POTATOES)) {
++                        mimicEntity = EntityInit.POTATO_ENTITY.get().create(serverLevel);
++                    } else if (state.is(Blocks.PUMPKIN) || state.is(Blocks.PUMPKIN_STEM) || state.is(Blocks.ATTACHED_PUMPKIN_STEM)) {
++                        // Treat pumpkin growth as mimic trigger too
++                        mimicEntity = EntityInit.PUMPKIN_ENTITY.get().create(serverLevel);
++                    }
++
++                    if (mimicEntity != null) {
++                        // Actually wait for player logic for vanilla crops is tricky as they are not ticking tile entities.
++                        // We'll spawn it immediately as a surprise upon growth, or we can use a custom invisible entity.
++                        // For simplicity in this mod context, spawning it instantly upon fully grown works for wild/player crops.
++
++                        BlockPos pos = event.getPos();
++                        serverLevel.destroyBlock(pos, false);
++                        serverLevel.playSound(null, pos, net.minecraft.sounds.SoundEvents.ZOMBIE_BREAK_WOODEN_DOOR, net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
++
++                        mimicEntity.setPos(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
++                        serverLevel.addFreshEntity(mimicEntity);
++                    }
++                }
++            }
++        }
++    }
+ }

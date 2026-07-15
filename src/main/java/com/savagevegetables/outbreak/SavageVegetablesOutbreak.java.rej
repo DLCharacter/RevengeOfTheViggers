@@ -1,0 +1,10 @@
+--- SavageVegetablesOutbreak.java
++++ SavageVegetablesOutbreak.java
+@@ -30,6 +31,7 @@
+         BlockInit.BLOCKS.register(modEventBus);
+         ItemInit.ITEMS.register(modEventBus);
+         EntityInit.ENTITY_TYPES.register(modEventBus);
++        SoundInit.SOUNDS.register(modEventBus);
+         CreativeTabInit.CREATIVE_MODE_TABS.register(modEventBus);
+         StructureInit.STRUCTURES.register(modEventBus);
+         StructurePieceInit.STRUCTURE_PIECES.register(modEventBus);

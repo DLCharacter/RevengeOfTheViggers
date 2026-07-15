@@ -82,11 +82,6 @@ public class OutbreakSavedData extends SavedData {
     public void addBossDefeated() {
         this.bossesDefeated++;
         this.setDirty();
-
-        if (this.currentStage >= 1 && this.currentStage < 4) {
-            this.setStage(this.currentStage + 1);
-        }
-
         checkDowngrade();
     }
 

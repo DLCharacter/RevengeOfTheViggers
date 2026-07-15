@@ -34,6 +34,31 @@ public class EntityInit {
             () -> EntityType.Builder.of(CornEntity::new, MobCategory.MONSTER)
                     .sized(0.5f, 1.5f).build("corn_entity"));
 
+    // Additional Vegetables
+    public static final RegistryObject<EntityType<LeekEntity>> LEEK_ENTITY = ENTITY_TYPES.register("leek",
+            () -> EntityType.Builder.of(LeekEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.8f).build("leek"));
+
+    public static final RegistryObject<EntityType<CucumberEntity>> CUCUMBER_ENTITY = ENTITY_TYPES.register("cucumber",
+            () -> EntityType.Builder.of(CucumberEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.8f).build("cucumber"));
+
+    public static final RegistryObject<EntityType<PotatoEntity>> POTATO_ENTITY = ENTITY_TYPES.register("potato",
+            () -> EntityType.Builder.of(PotatoEntity::new, MobCategory.MONSTER)
+                    .sized(0.8f, 0.8f).build("potato"));
+
+    public static final RegistryObject<EntityType<CarrotEntity>> CARROT_ENTITY = ENTITY_TYPES.register("carrot_mob",
+            () -> EntityType.Builder.of(CarrotEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.8f).build("carrot_mob"));
+
+    public static final RegistryObject<EntityType<BroccoliEntity>> BROCCOLI_ENTITY = ENTITY_TYPES.register("broccoli",
+            () -> EntityType.Builder.of(BroccoliEntity::new, MobCategory.MONSTER)
+                    .sized(0.8f, 1.8f).build("broccoli"));
+
+    public static final RegistryObject<EntityType<RadishEntity>> RADISH_ENTITY = ENTITY_TYPES.register("radish",
+            () -> EntityType.Builder.of(RadishEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 0.6f).build("radish"));
+
     // Stage 2 Bosses
     public static final RegistryObject<EntityType<com.savagevegetables.outbreak.entity.mob.boss.JerusalemArtichokeEntity>> JERUSALEM_ARTICHOKE_ENTITY = ENTITY_TYPES.register("jerusalem_artichoke",
             () -> EntityType.Builder.of(com.savagevegetables.outbreak.entity.mob.boss.JerusalemArtichokeEntity::new, MobCategory.MONSTER)
