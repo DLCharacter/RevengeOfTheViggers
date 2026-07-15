@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "savage_vegetables:block/mutated_soil"
+  }
+}
