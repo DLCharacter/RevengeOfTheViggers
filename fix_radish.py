@@ -15,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.core.BlockPos;
 import java.util.EnumSet;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.tags.DamageTypeTags;
 
 public class RadishEntity extends VegetableEntity {
     private int chargeTime = 0;
@@ -39,29 +40,14 @@ public class RadishEntity extends VegetableEntity {
 
         if (!this.level().isClientSide) {
             if (isDashing) {
-                // Break blocks in front
-                BlockPos pos = this.blockPosition();
-                for (int x = -1; x <= 1; x++) {
-                    for (int y = 0; y <= 2; y++) {
-                        for (int z = -1; z <= 1; z++) {
-                            BlockPos targetPos = pos.offset(x, y, z);
-                            net.minecraft.world.level.block.state.BlockState state = this.level().getBlockState(targetPos);
-                            if (!state.isAir() && state.getDestroySpeed(this.level(), targetPos) >= 0 && state.getDestroySpeed(this.level(), targetPos) < 50.0F) {
-                                this.level().destroyBlock(targetPos, true, this);
-                            }
-                        }
-                    }
-                }
-
-                // Damage entities
-                java.util.List<LivingEntity> entities = this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(1.0D));
-                for (LivingEntity e : entities) {
-                    if (e != this && !(e instanceof VegetableEntity) && !(e instanceof com.savagevegetables.outbreak.entity.mob.boss.BossVegetableEntity)) {
-                        e.hurt(this.damageSources().mobAttack(this), 10.0f);
-                    }
-                }
-
-                if (this.horizontalCollision || this.onGround() && chargeTime > 10) {
+                if (chargeTime > 10 && this.onGround()) {
+                    // Create a massive explosion when landing after dashing
+                    this.level().explode(this, this.getX(), this.getY(), this.getZ(), 8.0F, Level.ExplosionInteraction.MOB);
+                    isDashing = false;
+                    chargeTime = 0;
+                } else if (this.horizontalCollision) {
+                    // Explode on impact with a wall too
+                    this.level().explode(this, this.getX(), this.getY(), this.getZ(), 8.0F, Level.ExplosionInteraction.MOB);
                     isDashing = false;
                     chargeTime = 0;
                 } else {
@@ -73,6 +59,10 @@ public class RadishEntity extends VegetableEntity {
 
     @Override
     public boolean hurt(net.minecraft.world.damagesource.DamageSource source, float amount) {
+        if (source.is(DamageTypeTags.IS_EXPLOSION)) {
+            return false;
+        }
+
         if (isCharging) {
             isCharging = false;
             chargeTime = 0;
@@ -121,7 +111,13 @@ public class RadishEntity extends VegetableEntity {
         public void tick() {
             if (radish.isCharging) {
                 if (target.isAlive() && radish.hasLineOfSight(target)) {
-                    lastKnownTargetPos = target.position();
+                    // Predict future location based on target velocity
+                    Vec3 targetVel = target.getDeltaMovement();
+
+                    // The flight time depends roughly on distance. We will estimate it taking ~20 ticks (1 second) to land
+                    double estimatedTicksToLand = 20.0D;
+
+                    lastKnownTargetPos = target.position().add(targetVel.scale(estimatedTicksToLand));
                     radish.getLookControl().setLookAt(target, 30.0F, 30.0F);
                 } else {
                     radish.getLookControl().setLookAt(lastKnownTargetPos.x, lastKnownTargetPos.y, lastKnownTargetPos.z, 30.0F, 30.0F);
@@ -143,9 +139,9 @@ public class RadishEntity extends VegetableEntity {
                     double dist = Math.sqrt(dx * dx + dz * dz);
 
                     // Parabolic jump: add vertical velocity component
-                    // and horizontal velocity towards last known pos
+                    // and horizontal velocity towards predicted pos
                     double jumpVelocityY = 1.0D + (dist * 0.05D); // Scales slightly with distance
-                    double horizontalVelocity = 1.0D + (dist * 0.02D);
+                    double horizontalVelocity = 1.0D + (dist * 0.03D);
 
                     radish.setDeltaMovement(dx / dist * horizontalVelocity, jumpVelocityY, dz / dist * horizontalVelocity);
                     radish.playSound(net.minecraft.sounds.SoundEvents.ENDER_DRAGON_GROWL, 1.0F, 1.0F);
