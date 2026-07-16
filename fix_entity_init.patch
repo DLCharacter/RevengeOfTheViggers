@@ -1,0 +1,34 @@
+--- src/main/java/com/savagevegetables/outbreak/init/EntityInit.java
++++ src/main/java/com/savagevegetables/outbreak/init/EntityInit.java
+@@ -25,6 +25,30 @@
+
+     public static final RegistryObject<EntityType<CornEntity>> CORN_ENTITY = ENTITY_TYPES.register("corn_entity",
+             () -> EntityType.Builder.of(CornEntity::new, MobCategory.MONSTER)
+                     .sized(0.5f, 1.5f).build("corn_entity"));
+
++    // Stage 1 & 2 Additional Vegetables
++    public static final RegistryObject<EntityType<LeekEntity>> LEEK_ENTITY = ENTITY_TYPES.register("leek_entity",
++            () -> EntityType.Builder.of(LeekEntity::new, MobCategory.MONSTER)
++                    .sized(0.6f, 1.8f).build("leek_entity"));
++
++    public static final RegistryObject<EntityType<CucumberEntity>> CUCUMBER_ENTITY = ENTITY_TYPES.register("cucumber_entity",
++            () -> EntityType.Builder.of(CucumberEntity::new, MobCategory.MONSTER)
++                    .sized(0.6f, 1.8f).build("cucumber_entity"));
++
++    public static final RegistryObject<EntityType<PotatoEntity>> POTATO_ENTITY = ENTITY_TYPES.register("potato_entity",
++            () -> EntityType.Builder.of(PotatoEntity::new, MobCategory.MONSTER)
++                    .sized(0.8f, 0.8f).build("potato_entity"));
++
++    public static final RegistryObject<EntityType<CarrotEntity>> CARROT_ENTITY = ENTITY_TYPES.register("carrot_entity",
++            () -> EntityType.Builder.of(CarrotEntity::new, MobCategory.MONSTER)
++                    .sized(0.6f, 1.8f).build("carrot_entity"));
++
++    public static final RegistryObject<EntityType<BroccoliEntity>> BROCCOLI_ENTITY = ENTITY_TYPES.register("broccoli_entity",
++            () -> EntityType.Builder.of(BroccoliEntity::new, MobCategory.MONSTER)
++                    .sized(0.8f, 1.8f).build("broccoli_entity"));
++
++    public static final RegistryObject<EntityType<RadishEntity>> RADISH_ENTITY = ENTITY_TYPES.register("radish_entity",
++            () -> EntityType.Builder.of(RadishEntity::new, MobCategory.MONSTER)
++                    .sized(0.6f, 0.6f).build("radish_entity"));
++
+     // Stage 2 Bosses

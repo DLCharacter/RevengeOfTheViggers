@@ -14,7 +14,7 @@ public class ModCommands {
     public static double overrideMimicChance = -1.0;
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("setStage")
+        dispatcher.register(Commands.literal("setVeggieStage")
                 .requires(source -> source.hasPermission(2))
                 .then(Commands.argument("stage", IntegerArgumentType.integer(0, 7))
                         .executes(context -> {
@@ -26,7 +26,7 @@ public class ModCommands {
                             return 1;
                         })));
 
-        dispatcher.register(Commands.literal("setMimicChance")
+        dispatcher.register(Commands.literal("setVeggieMimicChance")
                 .requires(source -> source.hasPermission(2))
                 .then(Commands.argument("chance", DoubleArgumentType.doubleArg(-1.0, 1.0))
                         .executes(context -> {

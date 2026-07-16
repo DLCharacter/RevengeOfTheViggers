@@ -1,0 +1,33 @@
+--- src/main/java/com/savagevegetables/outbreak/world/OutbreakSavedData.java
++++ src/main/java/com/savagevegetables/outbreak/world/OutbreakSavedData.java
+@@ -62,15 +62,15 @@
+         this.setDirty();
+
+         // Progression thresholds for stages 4 -> 5 -> 6 -> 7
+-        if (this.currentStage == 4 && this.veggiesEaten >= 50) {
++        if (this.currentStage == 4 && this.veggiesEaten >= 100) {
+             this.setStage(5);
+             this.veggiesEaten = 0;
+-        } else if (this.currentStage == 5 && this.veggiesEaten >= 100) {
++        } else if (this.currentStage == 5 && this.veggiesEaten >= 200) {
+             this.setStage(6);
+             this.veggiesEaten = 0;
+-        } else if (this.currentStage == 6 && this.veggiesEaten >= 200) {
++        } else if (this.currentStage == 6 && this.veggiesEaten >= 300) {
+             this.setStage(7);
+             this.veggiesEaten = 0;
+         }
+     }
+
+@@ -86,9 +86,10 @@
+     }
+
+     private void checkDowngrade() {
+-        if (this.currentStage >= 5 && this.bossesDefeated >= 7 && this.bossFruitsEaten >= 7) {
++        // Downgrade only allowed if currentStage >= 4, check condition 7 bosses and 7 fruits
++        if (this.currentStage >= 4 && this.bossesDefeated >= 7 && this.bossFruitsEaten >= 7) {
+             this.setStage(this.currentStage - 1);
+             this.bossesDefeated -= 7;
+             this.bossFruitsEaten -= 7;
+             this.veggiesEaten = 0; // Reset eating progress for the stage we just downgraded to
+             this.setDirty();

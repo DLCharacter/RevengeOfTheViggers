@@ -1,0 +1,18 @@
+--- src/main/java/com/savagevegetables/outbreak/SavageVegetablesOutbreak.java
++++ src/main/java/com/savagevegetables/outbreak/SavageVegetablesOutbreak.java
+@@ -3,6 +3,7 @@
+ import com.savagevegetables.outbreak.init.BlockInit;
+ import com.savagevegetables.outbreak.init.EntityInit;
+ import com.savagevegetables.outbreak.init.ItemInit;
++import com.savagevegetables.outbreak.init.SoundInit;
+ import com.savagevegetables.outbreak.init.CreativeTabInit;
+ import com.savagevegetables.outbreak.init.StructureInit;
+ import com.savagevegetables.outbreak.init.StructurePieceInit;
+@@ -29,6 +30,7 @@
+         BlockInit.BLOCKS.register(modEventBus);
+         ItemInit.ITEMS.register(modEventBus);
+         EntityInit.ENTITY_TYPES.register(modEventBus);
++        SoundInit.SOUNDS.register(modEventBus);
+         CreativeTabInit.CREATIVE_MODE_TABS.register(modEventBus);
+         StructureInit.STRUCTURES.register(modEventBus);
+         StructurePieceInit.STRUCTURE_PIECES.register(modEventBus);

@@ -1,7 +1,9 @@
-package com.savagevegetables.outbreak.world.wave;
+with open('src/main/java/com/savagevegetables/outbreak/world/wave/WaveManager.java', 'r') as f:
+    content = f.read()
+
+correct_code = """package com.savagevegetables.outbreak.world.wave;
 
 import com.savagevegetables.outbreak.init.EntityInit;
-import com.savagevegetables.outbreak.init.SoundInit;
 import com.savagevegetables.outbreak.world.OutbreakSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -73,12 +75,6 @@ public class WaveManager {
         List<EntityType<? extends Mob>> pool = new ArrayList<>();
         pool.add(EntityInit.PUMPKIN_ENTITY.get());
         pool.add(EntityInit.TOMATO_ENTITY.get());
-        pool.add(EntityInit.LEEK_ENTITY.get());
-        pool.add(EntityInit.CUCUMBER_ENTITY.get());
-        pool.add(EntityInit.POTATO_ENTITY.get());
-        pool.add(EntityInit.CARROT_ENTITY.get());
-        pool.add(EntityInit.BROCCOLI_ENTITY.get());
-        pool.add(EntityInit.RADISH_ENTITY.get());
 
         if (stage >= 2) {
             pool.add(EntityInit.CORN_ENTITY.get());
@@ -94,10 +90,6 @@ public class WaveManager {
             pool.add(EntityInit.RUTABAGA_ENTITY.get());
             pool.add(EntityInit.CELERY_ENTITY.get());
         }
-
-        // Play wave spawn sound to the player
-        level.playSound(null, player.blockPosition(), SoundInit.WAVE_SPAWN.get(),
-                net.minecraft.sounds.SoundSource.HOSTILE, 1.0f, 1.0f);
 
         for (int i = 0; i < mobCount; i++) {
             EntityType<? extends Mob> type = pool.get(RANDOM.nextInt(pool.size()));
@@ -121,3 +113,7 @@ public class WaveManager {
         }
     }
 }
+"""
+
+with open('src/main/java/com/savagevegetables/outbreak/world/wave/WaveManager.java', 'w') as f:
+    f.write(correct_code)

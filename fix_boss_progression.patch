@@ -1,0 +1,13 @@
+--- src/main/java/com/savagevegetables/outbreak/world/OutbreakSavedData.java
++++ src/main/java/com/savagevegetables/outbreak/world/OutbreakSavedData.java
+@@ -83,6 +83,11 @@
+     public void addBossDefeated() {
+         this.bossesDefeated++;
+         this.setDirty();
++
++        if (this.currentStage >= 1 && this.currentStage < 4) {
++            this.setStage(this.currentStage + 1);
++        }
++
+         checkDowngrade();
+     }

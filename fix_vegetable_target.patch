@@ -1,0 +1,43 @@
+--- src/main/java/com/savagevegetables/outbreak/entity/mob/vegetables/VegetableEntity.java
++++ src/main/java/com/savagevegetables/outbreak/entity/mob/vegetables/VegetableEntity.java
+@@ -2,10 +2,40 @@
+
+ import net.minecraft.world.entity.EntityType;
+ import net.minecraft.world.entity.monster.Monster;
++import net.minecraft.world.entity.player.Player;
++import net.minecraft.world.entity.Mob;
++import net.minecraft.world.entity.LivingEntity;
++import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+ import net.minecraft.world.level.Level;
++import com.savagevegetables.outbreak.entity.mob.boss.BossVegetableEntity;
++import com.savagevegetables.outbreak.entity.mob.stage2.HybridEntity;
++import java.util.function.Predicate;
+
+ public abstract class VegetableEntity extends Monster {
+     protected VegetableEntity(EntityType<? extends Monster> type, Level level) {
+         super(type, level);
+     }
++
++    @Override
++    protected void registerGoals() {
++        super.registerGoals();
++
++        // Target non-vegetable mobs, prioritizing players
++        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
++
++        // Target any mob that is NOT a vegetable (either basic, hybrid or boss)
++        Predicate<LivingEntity> nonVegetablePredicate = (entity) -> {
++            if (entity instanceof VegetableEntity) return false;
++            if (entity instanceof BossVegetableEntity) return false;
++            if (entity instanceof HybridEntity) return false;
++            if (entity.getClass().getPackageName().contains("savagevegetables")) return false; // Broad fallback
++
++            // Don't target armor stands etc
++            if (!(entity instanceof Mob || entity instanceof Player)) return false;
++
++            return true;
++        };
++
++        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, 10, true, false, nonVegetablePredicate));
++    }
+ }
