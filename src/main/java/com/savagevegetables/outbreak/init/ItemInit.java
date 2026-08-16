@@ -59,6 +59,7 @@ public class ItemInit {
     public static final RegistryObject<Item> CARROT_SPAWN_EGG = ITEMS.register("carrot_spawn_egg", () -> new net.minecraftforge.common.ForgeSpawnEggItem(EntityInit.CARROT_ENTITY, 0xFF9900, 0x00FF00, new Item.Properties()));
     public static final RegistryObject<Item> BROCCOLI_SPAWN_EGG = ITEMS.register("broccoli_spawn_egg", () -> new net.minecraftforge.common.ForgeSpawnEggItem(EntityInit.BROCCOLI_ENTITY, 0x00FF00, 0x00AA00, new Item.Properties()));
     public static final RegistryObject<Item> RADISH_SPAWN_EGG = ITEMS.register("radish_spawn_egg", () -> new net.minecraftforge.common.ForgeSpawnEggItem(EntityInit.RADISH_ENTITY, 0xFF0055, 0xFFFFFF, new Item.Properties()));
+    public static final RegistryObject<Item> BELL_PEPPER_SPAWN_EGG = ITEMS.register("bell_pepper_spawn_egg", () -> new net.minecraftforge.common.ForgeSpawnEggItem(EntityInit.BELL_PEPPER_ENTITY, 0xFF0000, 0x00FF00, new Item.Properties()));
 
 
     // Spawn Eggs
