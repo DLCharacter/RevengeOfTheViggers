@@ -2,107 +2,128 @@ package com.savagevegetables.outbreak.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.util.Mth;
 
-public class CornMonsterModel<T extends Entity> extends HierarchicalModel<T> {
-    private final ModelPart root;
-    private final ModelPart head;
-    private final ModelPart body;
-    private final ModelPart rightArm;
-    private final ModelPart leftArm;
-    private final ModelPart rightLeg;
-    private final ModelPart leftLeg;
+public class CornMonsterModel<T extends Entity> extends EntityModel<T> {
+	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("modid", "dikiy_kukuruz"), "main");
+	private final ModelPart bone4;
+	private final ModelPart bone;
+	private final ModelPart bone3;
+	private final ModelPart bone2;
+	private final ModelPart bb_main;
 
-    public CornMonsterModel(ModelPart root) {
-        this.root = root;
-        this.head = root.getChild("head");
-        this.body = root.getChild("body");
-        this.rightArm = root.getChild("right_arm");
-        this.leftArm = root.getChild("left_arm");
-        this.rightLeg = root.getChild("right_leg");
-        this.leftLeg = root.getChild("left_leg");
-    }
+	public CornMonsterModel(ModelPart root) {
+		this.bone4 = root.getChild("bone4");
+		this.bone = root.getChild("bone");
+		this.bone3 = root.getChild("bone3");
+		this.bone2 = root.getChild("bone2");
+		this.bb_main = root.getChild("bb_main");
+	}
 
-    public static LayerDefinition createBodyLayer() {
-        MeshDefinition mesh = new MeshDefinition();
-        PartDefinition rootPart = mesh.getRoot();
+	public static LayerDefinition createBodyLayer() {
+		MeshDefinition meshdefinition = new MeshDefinition();
+		PartDefinition partdefinition = meshdefinition.getRoot();
 
-        // Голова (сужающаяся макушка початка)
-        rootPart.addOrReplaceChild("head", CubeListBuilder.create()
-                        .texOffs(0, 0).addBox(-2.0F, -6.0F, -2.0F, 4.0F, 6.0F, 4.0F),
-                PartPose.offset(0.0F, -6.0F, 0.0F));
+		PartDefinition bone4 = partdefinition.addOrReplaceChild("bone4", CubeListBuilder.create().texOffs(62, 20).addBox(-2.0F, -4.0F, 6.0F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 63).addBox(-7.0F, -20.0F, 2.0F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))
+		.texOffs(56, 37).addBox(-7.0F, -19.0F, 1.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F))
+		.texOffs(26, 25).addBox(-10.0F, -15.0F, -1.0F, 7.0F, 2.0F, 8.0F, new CubeDeformation(0.0F))
+		.texOffs(48, 69).addBox(0.0F, -4.0F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(18, 56).addBox(0.0F, -4.0F, 0.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
+		.texOffs(24, 44).addBox(-9.0F, -17.0F, 0.0F, 5.0F, 2.0F, 6.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 0).addBox(-11.0F, -13.0F, -2.0F, 9.0F, 15.0F, 10.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 68).addBox(0.0F, -4.0F, 5.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(64, 68).addBox(0.0F, -2.0F, 1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 14).addBox(0.0F, -2.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 56).addBox(-2.0F, -5.0F, 0.0F, 3.0F, 1.0F, 6.0F, new CubeDeformation(0.0F))
+		.texOffs(24, 52).addBox(-2.0F, -1.0F, 0.0F, 3.0F, 1.0F, 6.0F, new CubeDeformation(0.0F))
+		.texOffs(62, 16).addBox(-2.0F, -4.0F, -1.0F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(7.0F, 18.0F, -3.0F));
 
-        // Основное тело (сам початок)
-        PartDefinition body = rootPart.addOrReplaceChild("body", CubeListBuilder.create()
-                        .texOffs(0, 16).addBox(-3.0F, 0.0F, -3.0F, 6.0F, 16.0F, 6.0F),
-                PartPose.offset(0.0F, -6.0F, 0.0F));
+		PartDefinition bone = partdefinition.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(45, 60).addBox(2.0F, 2.0F, -8.0F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(38, 17).addBox(-8.0F, -4.0F, -9.0F, 11.0F, 7.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(46, 44).addBox(-8.0F, -7.0F, -10.0F, 11.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(56, 25).addBox(-6.0F, -10.0F, -10.0F, 9.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(60, 0).addBox(-6.0F, -12.0F, -10.0F, 6.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(60, 3).addBox(-5.0F, -14.0F, -9.0F, 4.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(42, 65).addBox(-4.0F, -16.0F, -9.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(70, 9).addBox(-2.0F, -15.0F, -9.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(70, 5).addBox(0.0F, -11.0F, -10.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(38, 0).addBox(-8.0F, -4.0F, -8.0F, 1.0F, 7.0F, 10.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 42).addBox(-8.0F, -4.0F, 2.0F, 11.0F, 7.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 50).addBox(-8.0F, -7.0F, 3.0F, 11.0F, 5.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 25).addBox(-9.0F, -7.0F, -9.0F, 1.0F, 5.0F, 12.0F, new CubeDeformation(0.0F))
+		.texOffs(56, 29).addBox(-7.0F, -10.0F, 3.0F, 9.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(52, 57).addBox(-5.0F, -12.0F, 2.0F, 6.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(60, 61).addBox(-3.0F, -14.0F, 2.0F, 4.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(8, 70).addBox(-1.0F, -16.0F, 2.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(30, 66).addBox(-2.0F, -15.0F, 2.0F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(70, 7).addBox(-4.0F, -13.0F, 2.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(30, 68).addBox(-6.0F, -11.0F, 2.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(35, 62).addBox(2.0F, 3.0F, 1.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, 13.0F, 3.0F));
 
-        // Лохмотья шелухи (листья, свисающие с тела)
-        // Передний лист
-        body.addOrReplaceChild("husk_front", CubeListBuilder.create()
-                        .texOffs(24, 30).addBox(-3.0F, 0.0F, -0.5F, 6.0F, 10.0F, 1.0F),
-                PartPose.offsetAndRotation(0.0F, 6.0F, -3.0F, -0.15F, 0.0F, 0.0F));
-        // Задний лист
-        body.addOrReplaceChild("husk_back", CubeListBuilder.create()
-                        .texOffs(24, 30).addBox(-3.0F, 0.0F, -0.5F, 6.0F, 10.0F, 1.0F),
-                PartPose.offsetAndRotation(0.0F, 6.0F, 3.0F, 0.15F, 0.0F, 0.0F));
-        // Боковые листья
-        body.addOrReplaceChild("husk_right", CubeListBuilder.create()
-                        .texOffs(38, 30).addBox(-0.5F, 0.0F, -3.0F, 1.0F, 10.0F, 6.0F),
-                PartPose.offsetAndRotation(-3.0F, 6.0F, 0.0F, 0.0F, 0.0F, 0.15F));
-        body.addOrReplaceChild("husk_left", CubeListBuilder.create()
-                        .texOffs(38, 30).addBox(-0.5F, 0.0F, -3.0F, 1.0F, 10.0F, 6.0F),
-                PartPose.offsetAndRotation(3.0F, 6.0F, 0.0F, 0.0F, 0.0F, -0.15F));
+		PartDefinition cube_r1 = bone.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(56, 33).addBox(-2.0F, -2.0F, 1.0F, 9.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-10.0F, -8.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
 
-        // Супер узкие и длинные руки (толщина 2x2, длина 18)
-        rootPart.addOrReplaceChild("right_arm", CubeListBuilder.create()
-                        .texOffs(24, 0).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 18.0F, 2.0F),
-                PartPose.offset(-4.0F, -4.0F, 0.0F));
+		PartDefinition cube_r2 = bone.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(18, 59).addBox(-1.0F, -1.0F, 1.0F, 6.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-9.0F, -11.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
 
-        rootPart.addOrReplaceChild("left_arm", CubeListBuilder.create()
-                        .texOffs(24, 0).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 18.0F, 2.0F),
-                PartPose.offset(4.0F, -4.0F, 0.0F));
+		PartDefinition cube_r3 = bone.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(16, 70).addBox(1.0F, 0.0F, 1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-9.0F, -13.0F, -2.0F, 0.0F, 1.5708F, 0.0F));
 
-        // Супер узкие ноги (толщина 2x2, длина 14)
-        rootPart.addOrReplaceChild("right_leg", CubeListBuilder.create()
-                        .texOffs(32, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 14.0F, 2.0F),
-                PartPose.offset(-1.5F, 10.0F, 0.0F));
+		PartDefinition cube_r4 = bone.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(60, 7).addBox(0.0F, -1.0F, 1.0F, 4.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-9.0F, -14.0F, 1.0F, 0.0F, 1.5708F, 0.0F));
 
-        rootPart.addOrReplaceChild("left_leg", CubeListBuilder.create()
-                        .texOffs(32, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 14.0F, 2.0F),
-                PartPose.offset(1.5F, 10.0F, 0.0F));
+		PartDefinition cube_r5 = bone.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(12, 70).addBox(1.0F, 0.0F, 1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(64, 64).addBox(1.0F, 1.0F, 1.0F, 2.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-8.0F, -18.0F, 1.0F, 0.0F, 1.5708F, 0.0F));
 
-        return LayerDefinition.create(mesh, 64, 64);
-    }
+		PartDefinition bone3 = partdefinition.addOrReplaceChild("bone3", CubeListBuilder.create().texOffs(8, 65).addBox(8.0F, -2.0F, 16.0F, 3.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(56, 66).addBox(4.0F, -3.0F, 16.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(42, 52).addBox(5.0F, -1.0F, 16.0F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(66, 57).addBox(6.0F, 2.0F, 16.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 50).addBox(7.0F, 4.0F, 16.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 53).addBox(8.0F, 3.0F, 16.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 67).addBox(9.0F, 1.0F, 16.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(4, 67).addBox(8.0F, -1.0F, 16.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(60, 64).addBox(3.0F, -8.0F, 16.0F, 1.0F, 6.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(70, 18).addBox(10.0F, -1.0F, 16.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(20, 70).addBox(9.0F, -3.0F, 16.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-3.0F, 15.0F, -9.0F));
 
-    @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        // Поворот головы и тела за целью
-        this.head.yRot = netHeadYaw * ((float)Math.PI / 180F);
-        this.head.xRot = headPitch * ((float)Math.PI / 180F);
-        // Тело слегка поворачивается вслед за головой для криповости
-        this.body.yRot = this.head.yRot * 0.5F;
+		PartDefinition bone2 = partdefinition.addOrReplaceChild("bone2", CubeListBuilder.create().texOffs(8, 65).addBox(8.0F, -2.0F, 16.0F, 3.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(56, 66).addBox(4.0F, -3.0F, 16.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(42, 52).addBox(5.0F, -1.0F, 16.0F, 1.0F, 4.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(66, 57).addBox(6.0F, 2.0F, 16.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 50).addBox(7.0F, 4.0F, 16.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 53).addBox(8.0F, 3.0F, 16.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(0, 67).addBox(9.0F, 1.0F, 16.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(4, 67).addBox(8.0F, -1.0F, 16.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(60, 64).addBox(3.0F, -8.0F, 16.0F, 1.0F, 6.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(70, 18).addBox(10.0F, -1.0F, 16.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(20, 70).addBox(9.0F, -3.0F, 16.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-3.0F, 15.0F, -24.0F));
 
-        // Жуткая, размашистая ходьба длинными ногами
-        this.rightLeg.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+		PartDefinition bb_main = partdefinition.addOrReplaceChild("bb_main", CubeListBuilder.create().texOffs(26, 35).addBox(-3.0F, -4.0F, -4.0F, 7.0F, 1.0F, 8.0F, new CubeDeformation(0.0F))
+		.texOffs(46, 50).addBox(-2.0F, -3.0F, -3.0F, 5.0F, 1.0F, 6.0F, new CubeDeformation(0.0F))
+		.texOffs(12, 67).addBox(0.0F, -2.0F, -2.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
+		.texOffs(68, 11).addBox(0.0F, -2.0F, 1.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        // Руки болтаются в противофазе, как плети
-        this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.2F * limbSwingAmount;
-        this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 1.2F * limbSwingAmount;
+		return LayerDefinition.create(meshdefinition, 128, 128);
+	}
 
-        // Легкое подергивание рук в состоянии покоя
-        this.rightArm.zRot = Mth.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
-        this.leftArm.zRot = Mth.cos(ageInTicks * 0.09F) * 0.05F - 0.05F;
-    }
+	@Override
+	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
-    @Override
-    public ModelPart root() {
-        return this.root;
-    }
+	}
+
+	@Override
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		bone4.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		bone.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		bone3.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		bone2.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		bb_main.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	}
 }

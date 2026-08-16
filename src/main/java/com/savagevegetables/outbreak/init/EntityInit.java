@@ -26,6 +26,10 @@ public class EntityInit {
             () -> EntityType.Builder.of(PumpkinEntity::new, MobCategory.MONSTER)
                     .sized(0.9f, 0.9f).build("pumpkin_entity"));
 
+    public static final RegistryObject<EntityType<BellPepperEntity>> BELL_PEPPER_ENTITY = ENTITY_TYPES.register("bell_pepper_entity",
+            () -> EntityType.Builder.of(BellPepperEntity::new, MobCategory.CREATURE)
+                    .sized(1.7f, 0.9f).build("bell_pepper_entity"));
+
     public static final RegistryObject<EntityType<TomatoEntity>> TOMATO_ENTITY = ENTITY_TYPES.register("tomato_entity",
             () -> EntityType.Builder.of(TomatoEntity::new, MobCategory.MONSTER)
                     .sized(0.6f, 0.6f).build("tomato_entity"));

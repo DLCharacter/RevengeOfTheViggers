@@ -1,6 +1,7 @@
 package com.savagevegetables.outbreak.client;
 
 import com.savagevegetables.outbreak.client.model.*;
+import com.savagevegetables.outbreak.client.model.pepper.BellPepperModel;
 import com.savagevegetables.outbreak.client.renderer.JerusalemArtichokeRenderer;
 import com.savagevegetables.outbreak.init.EntityInit;
 import com.savagevegetables.outbreak.client.renderer.VegetableRenderer;
@@ -24,6 +25,7 @@ public class ClientModEvents {
         event.registerLayerDefinition(ModelLayers.HYBRID, HybridCabbageStalkerModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayers.EGGPLANT, EggplantBlimpModel::createBodyLayer);
         event.registerLayerDefinition(ModelLayers.ZUCCHINI, ZucchiniKillerModel::createBodyLayer);
+        event.registerLayerDefinition(ModelLayers.BELL_PEPPER, BellPepperModel::createBodyLayer);
 
         event.registerLayerDefinition(ModelLayers.LEEK, () -> BasicCubeModel.createBodyLayer(16.0f, 16.0f));
         event.registerLayerDefinition(ModelLayers.CUCUMBER, () -> BasicCubeModel.createBodyLayer(16.0f, 16.0f));
@@ -47,6 +49,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(EntityInit.HYBRID_ENTITY.get(), com.savagevegetables.outbreak.client.renderer.HybridCabbageStalkerRenderer::new);
         event.registerEntityRenderer(EntityInit.EGGPLANT_ENTITY.get(), com.savagevegetables.outbreak.client.renderer.EggplantRenderer::new);
         event.registerEntityRenderer(EntityInit.ZUCCHINI_ENTITY.get(), com.savagevegetables.outbreak.client.renderer.ZucchiniRenderer::new);
+        event.registerEntityRenderer(EntityInit.BELL_PEPPER_ENTITY.get(), com.savagevegetables.outbreak.client.renderer.BellPepperRenderer::new);
 
         event.registerEntityRenderer(EntityInit.LEEK_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.LEEK, "cabbage_steve", 1.0f));
         event.registerEntityRenderer(EntityInit.CUCUMBER_ENTITY.get(), context -> new VegetableRenderer<>(context, ModelLayers.CUCUMBER, "cabbage_steve", 1.0f));

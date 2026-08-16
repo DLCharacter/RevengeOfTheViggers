@@ -20,4 +20,5 @@ public class ModelLayers {
     public static final ModelLayerLocation CARROT = new ModelLayerLocation(new ResourceLocation("savage_vegetables", "carrot"), "main");
     public static final ModelLayerLocation BROCCOLI = new ModelLayerLocation(new ResourceLocation("savage_vegetables", "broccoli"), "main");
     public static final ModelLayerLocation RADISH = new ModelLayerLocation(new ResourceLocation("savage_vegetables", "radish"), "main");
+    public static final ModelLayerLocation BELL_PEPPER = new ModelLayerLocation(new ResourceLocation("savage_vegetables", "bell_pepper"), "main");
 }
