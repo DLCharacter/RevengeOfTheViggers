@@ -83,6 +83,7 @@ public class SavageVegetablesOutbreak
         event.put(EntityInit.CARROT_ENTITY.get(), com.savagevegetables.outbreak.entity.mob.vegetables.CarrotEntity.createAttributes().build());
         event.put(EntityInit.BROCCOLI_ENTITY.get(), com.savagevegetables.outbreak.entity.mob.vegetables.BroccoliEntity.createAttributes().build());
         event.put(EntityInit.RADISH_ENTITY.get(), com.savagevegetables.outbreak.entity.mob.vegetables.RadishEntity.createAttributes().build());
+        event.put(EntityInit.BELL_PEPPER_ENTITY.get(), com.savagevegetables.outbreak.entity.mob.vegetables.BellPepperEntity.createAttributes().build());
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

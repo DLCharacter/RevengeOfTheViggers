@@ -36,7 +36,7 @@ public class CornMonsterModel<T extends Entity> extends EntityModel<T> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition rotated_root = partdefinition.addOrReplaceChild("rotated_root", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
+		PartDefinition rotated_root = partdefinition.addOrReplaceChild("rotated_root", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
 
 		PartDefinition bone4 = rotated_root.addOrReplaceChild("bone4", CubeListBuilder.create().texOffs(62, 20).addBox(-2.0F, -4.0F, 6.0F, 3.0F, 3.0F, 1.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 63).addBox(-7.0F, -20.0F, 2.0F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F))

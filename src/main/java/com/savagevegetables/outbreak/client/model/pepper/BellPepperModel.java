@@ -27,7 +27,7 @@ public class BellPepperModel<T extends Entity> extends HierarchicalModel<T> {
 
 	public BellPepperModel(ModelPart root) {
 		this.root = root; // Сохраняем корень
-		this.bell_pepper = root.getChild("rotated_wrapper").getChild("bell_pepper");
+		this.bell_pepper = root.getChild("bell_pepper");
 		this.right_leg = this.bell_pepper.getChild("right_leg");
 		this.sprout = this.bell_pepper.getChild("sprout");
 		this.body = this.bell_pepper.getChild("body");
@@ -43,8 +43,7 @@ public class BellPepperModel<T extends Entity> extends HierarchicalModel<T> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition rotated_wrapper = partdefinition.addOrReplaceChild("rotated_wrapper", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
-		PartDefinition bell_pepper = rotated_wrapper.addOrReplaceChild("bell_pepper", CubeListBuilder.create(), PartPose.offset(-1.0F, 0.0F, -0.6F));
+		PartDefinition bell_pepper = partdefinition.addOrReplaceChild("bell_pepper", CubeListBuilder.create(), PartPose.offset(-1.0F, 24.0F, -0.6F));
 		bell_pepper.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(24, 10).addBox(1.0F, -1.0F, -1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(8, 34).addBox(0.0F, -2.0F, -1.0F, 1.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 		bell_pepper.addOrReplaceChild("sprout", CubeListBuilder.create().texOffs(4, 34).addBox(0.5F, 0.3F, -2.1F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(30, 35).addBox(0.2F, -0.5F, -1.7F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(34, 35).addBox(0.0F, -1.0F, -1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.5F, -9.0F, 1.8F));
 
