@@ -62,5 +62,6 @@ public class CreativeTabInit {
                 output.accept(ItemInit.CARROT_SPAWN_EGG.get());
                 output.accept(ItemInit.BROCCOLI_SPAWN_EGG.get());
                 output.accept(ItemInit.RADISH_SPAWN_EGG.get());
+                output.accept(ItemInit.BELL_PEPPER_SPAWN_EGG.get());
             }).build());
 }
